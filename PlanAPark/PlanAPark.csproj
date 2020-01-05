@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="airport.jpg" />
+    <None Remove="cessna.jpg" />
+    <None Remove="hornet.jpg" />
+    <None Remove="tutor.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\cessna.jpg" />
+    <Resource Include="Images\hornet.jpg" />
+    <Resource Include="Images\airport.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\tutor.jpg" />
+  </ItemGroup>
+
+</Project>
