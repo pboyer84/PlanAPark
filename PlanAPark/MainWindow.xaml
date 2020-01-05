@@ -28,7 +28,6 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="1" />
         <StackPanel Orientation="Vertical">
-            <Label>Test Label</Label>
             <Button Style="{StaticResource ImageButtonStyle}" 
                     Click="ImageButton_Click"
                     Tag="{StaticResource tutorImage}">
@@ -61,8 +60,7 @@
             <Canvas x:Name="airportCanvas"
                     AllowDrop="True"
                     Drop="airportCanvas_Drop">
-                <Label>Test Inside</Label>
-                <Image Source="{StaticResource airportImage}" Stretch="Fill" />
+            <Image Source="{StaticResource airportImage}" Stretch="Fill" />
             </Canvas>
         </Grid>
     </Grid>

@@ -7,20 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Token.xaml.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="airport.jpg" />
     <None Remove="cessna.jpg" />
     <None Remove="hornet.jpg" />
     <None Remove="tutor.jpg" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Page Remove="Token.xaml" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <Resource Include="Images\cessna.jpg" />
     <Resource Include="Images\hornet.jpg" />
