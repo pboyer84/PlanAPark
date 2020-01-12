@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlanAPark"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="900" Width="1600">
     <Window.Resources>
         <BitmapImage x:Key="hornetImage" UriSource="Images\hornet.jpg" />
         <BitmapImage x:Key="cessnaImage" UriSource="Images\cessna.jpg" />
         <BitmapImage x:Key="tutorImage" UriSource="Images\tutor.jpg" />
+        <BitmapImage x:Key="lancasterImage" UriSource="Images\lancaster.jpg" />
         <BitmapImage x:Key="airportImage" UriSource="Images\airport.jpg" />
         <Style TargetType="{x:Type Button}" x:Key="ImageButtonStyle">
             <Setter Property="Template">
@@ -29,7 +30,7 @@
         <Grid Grid.Column="1" />
         <StackPanel Orientation="Vertical">
             <Button Style="{StaticResource ImageButtonStyle}" 
-                    Click="ImageButton_Click"
+                    Click="ImgTutorImageButton_Click"
                     Tag="{StaticResource tutorImage}">
                 <Image x:Name="imgTutorToken" 
                        Source="{StaticResource tutorImage}" 
@@ -38,7 +39,7 @@
                        Width="48" />
             </Button>
             <Button Style="{StaticResource ImageButtonStyle}" 
-                    Click="ImageButton_Click"
+                    Click="ImgHornetImageButton_Click"
                     Tag="{StaticResource hornetImage}">
                 <Image x:Name="imgHornetToken" 
                        Source="{StaticResource hornetImage}" 
@@ -47,10 +48,19 @@
                        Width="48" />
             </Button>
             <Button Style="{StaticResource ImageButtonStyle}" 
-                    Click="ImageButton_Click" 
+                    Click="ImgCessnaImageButton_Click" 
                     Tag="{StaticResource cessnaImage}">
                 <Image x:Name="imgCessnaToken" 
                        Source="{StaticResource cessnaImage}" 
+                       Stretch="Fill" 
+                       Height="48"
+                       Width="48" />
+            </Button>
+            <Button Style="{StaticResource ImageButtonStyle}" 
+                    Click="ImgLancasterImageButton_Click" 
+                    Tag="{StaticResource lancasterImage}">
+                <Image x:Name="imgLancasterToken" 
+                       Source="{StaticResource lancasterImage}" 
                        Stretch="Fill" 
                        Height="48"
                        Width="48" />
@@ -60,7 +70,11 @@
             <Canvas x:Name="airportCanvas"
                     AllowDrop="True"
                     Drop="airportCanvas_Drop">
-            <Image Source="{StaticResource airportImage}" Stretch="Fill" />
+                <Image Source="{StaticResource airportImage}" Stretch="Fill">
+                    <Image.RenderTransform>
+                        <ScaleTransform ScaleX="2" ScaleY="2" />
+                    </Image.RenderTransform>
+                </Image>
             </Canvas>
         </Grid>
     </Grid>
