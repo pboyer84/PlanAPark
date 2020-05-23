@@ -21,8 +21,16 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
     </Window.Resources>
-    <Grid>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="_Save" />
+                <MenuItem Header="_Exit" Click="MenuItemExit_Click" />
+            </MenuItem> 
+        </Menu>
+        <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="8*" />
@@ -78,4 +86,5 @@
             </Canvas>
         </Grid>
     </Grid>
+    </DockPanel>
 </Window>

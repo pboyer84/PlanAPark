@@ -10,108 +10,80 @@ namespace PlanAPark
     /// </summary>
     public partial class MainWindow : Window
     {
-        public double MetersToPixelsScale = 20d / 28d;
+        private readonly double MetersToPixelsScale = 20d / 7d;
 
-        public double cessnaLengthInMeters = 8.28d * 4;
-        public double cessnaWidthInMeters = 11d * 4;
-        public double lancasterWidthInMeters = 21.18d * 4;
-        public double lancasterLengthInMeters = 31.09d * 4;
-        public double hornetLengthInMeters = 17.1d * 4;
-        public double hornetWidthInMeters = 12.3d * 4;
-        public double tutorLengthInMeters = 9.75d * 4;
-        public double tutorWidthInMeters = 11.07d * 4;
+        private readonly double cessnaLengthInMeters = 8.28d;
+        private readonly double cessnaWidthInMeters = 11d;
+        private readonly double lancasterWidthInMeters = 31.09d;
+        private readonly double lancasterLengthInMeters = 21.18d;
+        private readonly double hornetLengthInMeters = 17.1d;
+        private readonly double hornetWidthInMeters = 12.3d;
+        private readonly double tutorLengthInMeters = 9.75d;
+        private readonly double tutorWidthInMeters = 11.07d;
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
+        private void ImgLancasterImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            SpawnNewToken(sender as Button, (lancasterWidthInMeters, lancasterLengthInMeters));
+        }
+
+        private void MenuItemExit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
         private void ImgCessnaImageButton_Click(object sender, RoutedEventArgs e)
         {
-            Button b = sender as Button;
-            BitmapSource s = b.Tag as BitmapSource;
-            Image i = new Image();
-            i.MouseDown += ImageButton_StartDrag;
-            i.Source = s;
-            i.Stretch = System.Windows.Media.Stretch.Fill;
-            i.Height = cessnaLengthInMeters * MetersToPixelsScale;
-            i.Width = cessnaWidthInMeters * MetersToPixelsScale;
-            Random r = new Random();
-            var x = r.Next(0, (int)airportCanvas.ActualWidth);
-            var y = r.Next(0, (int)airportCanvas.ActualHeight);
-            Canvas.SetLeft(i, x);
-            Canvas.SetTop(i, y);
-            airportCanvas.Children.Add(i);
+            SpawnNewToken(sender as Button, (cessnaWidthInMeters, cessnaLengthInMeters));
         }
 
         private void ImgHornetImageButton_Click(object sender, RoutedEventArgs e)
         {
-            Button b = sender as Button;
-            BitmapSource s = b.Tag as BitmapSource;
-            Image i = new Image();
-            i.Stretch = System.Windows.Media.Stretch.Fill;
-            i.MouseDown += ImageButton_StartDrag;
-            i.Source = s;
-            i.Height = hornetLengthInMeters * MetersToPixelsScale;
-            i.Width = hornetWidthInMeters * MetersToPixelsScale;
-            Random r = new Random();
-            var x = r.Next(0, (int)airportCanvas.ActualWidth);
-            var y = r.Next(0, (int)airportCanvas.ActualHeight);
-            Canvas.SetLeft(i, x);
-            Canvas.SetTop(i, y);
-            airportCanvas.Children.Add(i);
+            SpawnNewToken(sender as Button, (hornetWidthInMeters, hornetLengthInMeters));
         }
 
         private void ImgTutorImageButton_Click(object sender, RoutedEventArgs e)
         {
-            Button b = sender as Button;
-            BitmapSource s = b.Tag as BitmapSource;
-            Image i = new Image();
-            i.MouseDown += ImageButton_StartDrag;
-            i.Source = s;
-            i.Stretch = System.Windows.Media.Stretch.Fill;
-            i.Height = tutorLengthInMeters * MetersToPixelsScale;
-            i.Width = tutorWidthInMeters * MetersToPixelsScale;
-            Random r = new Random();
-            var x = r.Next(0, (int)airportCanvas.ActualWidth);
-            var y = r.Next(0, (int)airportCanvas.ActualHeight);
-            Canvas.SetLeft(i, x);
-            Canvas.SetTop(i, y);
-            airportCanvas.Children.Add(i);
+            SpawnNewToken(sender as Button, (tutorWidthInMeters, tutorLengthInMeters));
         }
 
-        private void ImgLancasterImageButton_Click(object sender, RoutedEventArgs e)
+        private void SpawnNewToken(Button source, (double width, double length) planeDimensions)
         {
-            Button b = sender as Button;
-            BitmapSource s = b.Tag as BitmapSource;
-            Image i = new Image();
-            i.Stretch = System.Windows.Media.Stretch.Fill;
-            i.MouseDown += ImageButton_StartDrag;
-            i.Source = s;
-            i.Height = lancasterLengthInMeters * MetersToPixelsScale;
-            i.Width = lancasterWidthInMeters * MetersToPixelsScale;
-            Random r = new Random();
+            var s = source.Tag as BitmapSource;
+            var newToken = new Token();
+            newToken.MouseDown += ImageButton_StartDrag;
+            newToken.myImage.Source = s;
+            newToken.myImage.Stretch = System.Windows.Media.Stretch.Fill;
+            newToken.Height = planeDimensions.length * MetersToPixelsScale;
+            newToken.Width = planeDimensions.width * MetersToPixelsScale;
+            
+            var r = new Random();
             var x = r.Next(0, (int)airportCanvas.ActualWidth);
             var y = r.Next(0, (int)airportCanvas.ActualHeight);
-            Canvas.SetLeft(i, x);
-            Canvas.SetTop(i, y);
-            airportCanvas.Children.Add(i);
+            Canvas.SetLeft(newToken, x);
+            Canvas.SetTop(newToken, y);
+            airportCanvas.Children.Add(newToken);
         }
 
         private void ImageButton_StartDrag(object sender, RoutedEventArgs e)
         {
-            var d = new DataObject();
-            d.SetData(typeof(Image), sender);
-            DragDrop.DoDragDrop((DependencyObject)e.Source, d, DragDropEffects.Move);
+            var drag = new DataObject();
+            drag.SetData(typeof(Token), sender);
+            DragDrop.DoDragDrop((DependencyObject)e.Source, drag, DragDropEffects.Move);
         }
 
         private void airportCanvas_Drop(object sender, DragEventArgs e)
         {
             base.OnDrop(e);
+
             var mousePoint = e.GetPosition(airportCanvas);
-            Image i = e.Data.GetData(typeof(Image)) as Image;
-            Canvas.SetTop(i, mousePoint.Y);
-            Canvas.SetLeft(i, mousePoint.X);
+            var draggedToken = e.Data.GetData(typeof(Token)) as Token;
+            Canvas.SetTop(draggedToken, mousePoint.Y);
+            Canvas.SetLeft(draggedToken, mousePoint.X);
         }
     }
 }
