@@ -76,7 +76,9 @@
         </StackPanel>
         <Grid Grid.Column="2">
             <Canvas x:Name="airportCanvas"
+                    Focusable="True"
                     AllowDrop="False"
+                    KeyUp="OnKeyUp"
                     MouseUp="OnMouseButtonUp"
                     MouseMove="OnMouseMove"
                     MouseDown="OnMouseButtonDown">

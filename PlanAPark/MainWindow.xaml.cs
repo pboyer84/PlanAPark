@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace PlanAPark
@@ -65,6 +66,7 @@ namespace PlanAPark
 
         private void OnMouseButtonDown(object sender, MouseButtonEventArgs e)
         {
+            airportCanvas.Focus();
             mousePosition = e.GetPosition(airportCanvas);
             selectedToken?.HideBorder();
             if (e.Source is Token)
@@ -96,7 +98,7 @@ namespace PlanAPark
             var newToken = new Token();
             
             newToken.myImage.Source = s;
-            newToken.myImage.Stretch = System.Windows.Media.Stretch.Fill;
+            newToken.myImage.Stretch = Stretch.Fill;
             newToken.Height = planeDimensions.length * MetersToPixelsScale;
             newToken.Width = planeDimensions.width * MetersToPixelsScale;
             
@@ -106,6 +108,18 @@ namespace PlanAPark
             Canvas.SetLeft(newToken, x);
             Canvas.SetTop(newToken, y);
             airportCanvas.Children.Add(newToken);
+        }
+
+        private void OnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.R)
+            {
+                selectedToken.Rotate(-15);
+            }
+            if (e.Key == Key.T)
+            {
+                selectedToken.Rotate(15);
+            }
         }
     }
 }

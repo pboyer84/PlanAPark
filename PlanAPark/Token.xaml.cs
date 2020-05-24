@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PlanAPark
 {
@@ -21,9 +12,20 @@ namespace PlanAPark
         private Thickness Off = new Thickness(0);
         private Thickness On = new Thickness(2);
 
+        private double rotation = 0d;
         public Token()
         {
             InitializeComponent();
+        }
+
+        public void Rotate(double angle)
+        {
+            var centerY = Height / 2;
+            var centerX = Width / 2;
+            rotation += angle;
+            var r = new RotateTransform(rotation, centerX, centerY);
+            
+            RenderTransform = r;
         }
 
         public void ShowBorder()
