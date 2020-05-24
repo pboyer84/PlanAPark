@@ -76,8 +76,10 @@
         </StackPanel>
         <Grid Grid.Column="2">
             <Canvas x:Name="airportCanvas"
-                    AllowDrop="True"
-                    Drop="airportCanvas_Drop">
+                    AllowDrop="False"
+                    MouseUp="OnMouseButtonUp"
+                    MouseMove="OnMouseMove"
+                    MouseDown="OnMouseButtonDown">
                 <Image Source="{StaticResource airportImage}" Stretch="Fill">
                     <Image.RenderTransform>
                         <ScaleTransform ScaleX="2" ScaleY="2" />

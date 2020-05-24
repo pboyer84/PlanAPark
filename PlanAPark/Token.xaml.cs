@@ -22,5 +22,17 @@ namespace PlanAPark
         {
             InitializeComponent();
         }
+
+        public void ToggleBorder()
+        {
+            if (myBorder.BorderThickness.Top == 2)
+            {
+                myBorder.BorderThickness = new Thickness(0);
+            }
+            else
+            {
+                myBorder.BorderThickness = new Thickness(2);
+            }
+        }
     }
 }
