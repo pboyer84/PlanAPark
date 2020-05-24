@@ -23,6 +23,7 @@ namespace PlanAPark
 
         private Point mousePosition;
         private Token draggedToken;
+        private Token selectedToken;
         
         public MainWindow()
         {
@@ -56,18 +57,22 @@ namespace PlanAPark
 
         private void OnMouseButtonUp(object sender, MouseButtonEventArgs e)
         {
-            draggedToken.ToggleBorder();
-            draggedToken = null;
+            if (e.Source is Token)
+            {
+                draggedToken = null;
+            }
         }
 
         private void OnMouseButtonDown(object sender, MouseButtonEventArgs e)
         {
             mousePosition = e.GetPosition(airportCanvas);
+            selectedToken?.HideBorder();
             if (e.Source is Token)
             {
                 draggedToken = e.Source as Token;
-                draggedToken.ToggleBorder();
-            }   
+                selectedToken = draggedToken;
+                selectedToken.ShowBorder();
+            }
         }
 
         private void OnMouseMove(object sender, MouseEventArgs e)
@@ -76,6 +81,7 @@ namespace PlanAPark
             {
                 return;
             }
+            
             Point currentPosition = e.GetPosition(airportCanvas);
             double deltaX = currentPosition.X - mousePosition.X;
             double deltaY = currentPosition.Y - mousePosition.Y;

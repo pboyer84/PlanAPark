@@ -18,21 +18,22 @@ namespace PlanAPark
     /// </summary>
     public partial class Token : UserControl
     {
+        private Thickness Off = new Thickness(0);
+        private Thickness On = new Thickness(2);
+
         public Token()
         {
             InitializeComponent();
         }
 
-        public void ToggleBorder()
+        public void ShowBorder()
         {
-            if (myBorder.BorderThickness.Top == 2)
-            {
-                myBorder.BorderThickness = new Thickness(0);
-            }
-            else
-            {
-                myBorder.BorderThickness = new Thickness(2);
-            }
+            myBorder.BorderThickness = On;
+        }
+
+        public void HideBorder()
+        {
+            myBorder.BorderThickness = Off;
         }
     }
 }
