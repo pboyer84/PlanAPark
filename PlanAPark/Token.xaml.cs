@@ -7,13 +7,13 @@ namespace PlanAPark
     /// <summary>
     /// Interaction logic for Token.xaml
     /// </summary>
-    public partial class Token : UserControl
+    internal partial class Token : UserControl
     {
         private Thickness Off = new Thickness(0);
         private Thickness On = new Thickness(2);
 
         private double rotation = 0d;
-        public Token()
+        internal Token()
         {
             InitializeComponent();
         }

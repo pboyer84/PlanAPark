@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace PlanAPark
 {
-    public class ScaledImage : Image
+    internal class ScaledImage : Image
     {
         public double GlobalScale;
     }
