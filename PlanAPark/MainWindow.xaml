@@ -1,4 +1,5 @@
 ﻿<Window x:Class="PlanAPark.MainWindow"
+        x:ClassModifier="public"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,11 +8,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="900" Width="1600">
     <Window.Resources>
-        <BitmapImage x:Key="hornetImage" UriSource="Images\hornet.jpg" />
-        <BitmapImage x:Key="cessnaImage" UriSource="Images\cessna.jpg" />
-        <BitmapImage x:Key="tutorImage" UriSource="Images\tutor.jpg" />
-        <BitmapImage x:Key="lancasterImage" UriSource="Images\lancaster.jpg" />
-        <BitmapImage x:Key="airportImage" UriSource="Images\airport.jpg" />
+        <local:AircraftData x:Key="tutor" Name="tutor" LengthInMeters="9.75" WidthInMeters="11.07" ImageFilename="tutor.jpg" />
+        <local:AircraftData x:Key="hornet" Name="hornet" LengthInMeters="17.1" WidthInMeters="12.3" ImageFilename="hornet.jpg" />
+        <local:AircraftData x:Key="cessna" Name="cessna" LengthInMeters="8.28" WidthInMeters="11" ImageFilename="cessna.jpg" />
+        <local:AircraftData x:Key="lancaster" Name="lancaster" LengthInMeters="21.18" WidthInMeters="31.09" ImageFilename="lancaster.jpg"/>
+        <BitmapImage x:Key="airport" UriSource="Images\airport.jpg" />
         <Style TargetType="{x:Type Button}" x:Key="ImageButtonStyle">
             <Setter Property="Template">
                 <Setter.Value>
@@ -21,11 +22,11 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
     </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
+                <MenuItem Header="Save _As" Click="MenuItemSaveAs_Click" />
                 <MenuItem Header="_Save" />
                 <MenuItem Header="_Exit" Click="MenuItemExit_Click" />
             </MenuItem> 
@@ -36,45 +37,8 @@
             <ColumnDefinition Width="8*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="1" />
-        <StackPanel Orientation="Vertical">
-            <Button Style="{StaticResource ImageButtonStyle}" 
-                    Click="ImgTutorImageButton_Click"
-                    Tag="{StaticResource tutorImage}">
-                <Image x:Name="imgTutorToken" 
-                       Source="{StaticResource tutorImage}" 
-                       Stretch="Fill" 
-                       Height="48" 
-                       Width="48" />
-            </Button>
-            <Button Style="{StaticResource ImageButtonStyle}" 
-                    Click="ImgHornetImageButton_Click"
-                    Tag="{StaticResource hornetImage}">
-                <Image x:Name="imgHornetToken" 
-                       Source="{StaticResource hornetImage}" 
-                       Stretch="Fill" 
-                       Height="48" 
-                       Width="48" />
-            </Button>
-            <Button Style="{StaticResource ImageButtonStyle}" 
-                    Click="ImgCessnaImageButton_Click" 
-                    Tag="{StaticResource cessnaImage}">
-                <Image x:Name="imgCessnaToken" 
-                       Source="{StaticResource cessnaImage}" 
-                       Stretch="Fill" 
-                       Height="48"
-                       Width="48" />
-            </Button>
-            <Button Style="{StaticResource ImageButtonStyle}" 
-                    Click="ImgLancasterImageButton_Click" 
-                    Tag="{StaticResource lancasterImage}">
-                <Image x:Name="imgLancasterToken" 
-                       Source="{StaticResource lancasterImage}" 
-                       Stretch="Fill" 
-                       Height="48"
-                       Width="48" />
-            </Button>
-        </StackPanel>
-        <Grid Grid.Column="2">
+            <StackPanel x:Name="pnButtons" Orientation="Vertical" />
+            <Grid Grid.Column="2">
             <Canvas x:Name="airportCanvas"
                     Focusable="True"
                     AllowDrop="False"
@@ -82,7 +46,7 @@
                     MouseUp="OnMouseButtonUp"
                     MouseMove="OnMouseMove"
                     MouseDown="OnMouseButtonDown">
-                <Image Source="{StaticResource airportImage}" Stretch="Fill">
+                <Image Source="{StaticResource airport}" Stretch="Fill">
                     <Image.RenderTransform>
                         <ScaleTransform ScaleX="2" ScaleY="2" />
                     </Image.RenderTransform>
