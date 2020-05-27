@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -87,6 +89,22 @@ namespace PlanAPark
             airportCanvas.Children.Add(newToken);
         }
 
+        private void SpawnNewToken(TokenDTO tokenDTO)
+        {
+            var newToken = new Token();
+            
+            newToken.myImage.Source = new BitmapImage(
+                    new Uri(tokenDTO.AircraftImageUri,
+                    UriKind.Absolute));
+
+            newToken.myImage.Stretch = Stretch.Fill;
+            newToken.Height = tokenDTO.Height;
+            newToken.Width = tokenDTO.Width;
+            Canvas.SetLeft(newToken, tokenDTO.Left);
+            Canvas.SetTop(newToken, tokenDTO.Top);
+            airportCanvas.Children.Add(newToken);
+        }
+
         private void OnKeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.R)
@@ -101,7 +119,7 @@ namespace PlanAPark
 
         private void MenuItemSaveAs_Click(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog
+            var dlg = new SaveFileDialog
             {
                 FileName = "Airshow Plan", // Default file name
                 DefaultExt = ".airshow", // Default file extension
@@ -110,22 +128,36 @@ namespace PlanAPark
 
             bool? result = dlg.ShowDialog();
 
-            if (result == true)
+            if (result == false)
             {
-                Title = $"Plan A Park - {dlg.FileName}";
+                return;
             }
-            var items = airportCanvas.Children.OfType<Token>();
-            foreach (var item in items)
+
+            Title = $"Plan A Park - {dlg.FileName}";
+
+            using var s = dlg.OpenFile();
+            var items = airportCanvas.Children.OfType<Token>().ToArray();
+            var dtos = new TokenDTO[items.Length];
+            for (int i = 0; i < items.Length; i++)
             {
-                Token t = item;
-                var f = GetWindow(this.Parent).Resources;
-                TokenDTO dto = new TokenDTO()
+                var dto = new TokenDTO()
                 {
-                    Top = Canvas.GetTop(item),
-                    Left = Canvas.GetLeft(item),
-                    Aircraft = "foo"
+                    Top = Canvas.GetTop(items[i]),
+                    Left = Canvas.GetLeft(items[i]),
+                    Rotation = (items[i].RenderTransform as RotateTransform)?.Angle ?? 0,
+                    AircraftImageUri = items[i].myImage.Source.ToString(),
+                    Width = items[i].Width,
+                    Height = items[i].Height
                 };
+                dtos[i] = dto;
             }
+            AirshowLayoutDTO airshowLayoutDto = new AirshowLayoutDTO()
+            {
+                TokenDTOs = dtos
+            };
+
+            var formatter = new BinaryFormatter();
+            formatter.Serialize(s, airshowLayoutDto);
         }
 
         private void LoadAircraft()
@@ -152,6 +184,33 @@ namespace PlanAPark
                 };
                 pnButtons.Children.Add(button);
             }   
+        }
+
+        private void MenuItemOpen_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new OpenFileDialog()
+            {
+                FileName = "Airshow Plan", // Default file name
+                DefaultExt = ".airshow", // Default file extension
+                Filter = "Airshow Plans (.airshow)|*.airshow" // Filter files by extension
+            };
+
+            bool? result = dlg.ShowDialog();
+
+            if (result == false)
+            {
+                return;
+            }
+
+            Title = $"Plan A Park - {dlg.FileName}";
+
+            using var s = dlg.OpenFile();
+            var formatter = new BinaryFormatter();
+            var dtoLayout = formatter.Deserialize(s) as AirshowLayoutDTO;
+            foreach (var dto in dtoLayout.TokenDTOs)
+            {
+                SpawnNewToken(dto);
+            }
         }
     }
 }

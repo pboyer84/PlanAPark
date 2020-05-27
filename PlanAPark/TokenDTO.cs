@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PlanAPark
 {
+    [Serializable]
     internal class TokenDTO
     {
-        internal string Aircraft { get; set; }
+        internal string AircraftImageUri { get; set; }
         internal double Top { get; set; }
         internal double Left { get; set; }
+        internal double Rotation { get; set; }
+        internal double Height { get; set; }
+        internal double Width { get; set; }
     }
 }

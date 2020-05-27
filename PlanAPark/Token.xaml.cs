@@ -18,7 +18,7 @@ namespace PlanAPark
             InitializeComponent();
         }
 
-        public void Rotate(double angle)
+        internal void Rotate(double angle)
         {
             var centerY = Height / 2;
             var centerX = Width / 2;
@@ -28,12 +28,12 @@ namespace PlanAPark
             RenderTransform = r;
         }
 
-        public void ShowBorder()
+        internal void ShowBorder()
         {
             myBorder.BorderThickness = On;
         }
 
-        public void HideBorder()
+        internal void HideBorder()
         {
             myBorder.BorderThickness = Off;
         }
