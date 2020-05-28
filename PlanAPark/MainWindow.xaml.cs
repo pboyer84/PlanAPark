@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
@@ -21,7 +22,7 @@ namespace PlanAPark
         private Point mousePosition;
         private Token draggedToken;
         private Token selectedToken;
-        
+        private string filename = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -211,6 +212,31 @@ namespace PlanAPark
             {
                 SpawnNewToken(dto);
             }
+        }
+
+        private void MenuItemExportPng_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new SaveFileDialog
+            {
+                FileName = Path.ChangeExtension(filename ?? "untitled", "png"), // Default file name
+                DefaultExt = ".png", // Default file extension
+                Filter = "PNG (.png)|*.png" // Filter files by extension
+            };
+
+            bool? result = dlg.ShowDialog();
+
+            if (result == false)
+            {
+                return;
+            }
+
+            var pngRect = new Rect(airportCanvas.RenderSize);
+            var renderTargetBitmap = new RenderTargetBitmap((int)pngRect.Right, (int)pngRect.Bottom, 96d, 96d, PixelFormats.Default);
+            renderTargetBitmap.Render(airportCanvas);
+            var pngEncoder = new PngBitmapEncoder();
+            pngEncoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));            
+            using var s = dlg.OpenFile();
+            pngEncoder.Save(s);
         }
     }
 }
