@@ -37,5 +37,11 @@ namespace PlanAPark
         {
             myBorder.BorderThickness = Off;
         }
+
+        private void MenuItemDelete_Click(object sender, RoutedEventArgs e)
+        {
+            var canvas = Parent as Canvas;
+            canvas.Children.Remove(this);
+        }
     }
 }

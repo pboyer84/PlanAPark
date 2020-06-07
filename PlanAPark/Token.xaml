@@ -10,6 +10,12 @@
     <Border x:Name="myBorder"
             BorderThickness="0"
             BorderBrush="DarkViolet">
-        <local:ScaledImage x:Name="myImage" />
+        <Image x:Name="myImage">
+            <Image.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete" Click="MenuItemDelete_Click" />
+                </ContextMenu>
+            </Image.ContextMenu>
+        </Image>
     </Border>
 </UserControl>
