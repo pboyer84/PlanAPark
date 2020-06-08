@@ -71,10 +71,9 @@ namespace PlanAPark
             mousePosition = currentPosition;
         }
 
-        private void SpawnNewToken(AircraftData aircraft)
+        private void SpawnNewToken(AircraftData aircraft, Point topLeft)
         {
             var newToken = new Token();
-
             newToken.myImage.Source = new BitmapImage(
                     new Uri($"pack://application:,,,/Images/{aircraft.ImageFilename}",
                     UriKind.Absolute));
@@ -82,9 +81,8 @@ namespace PlanAPark
             newToken.myImage.Stretch = Stretch.Fill;
             newToken.Height = aircraft.LengthInMeters * MetersToPixelsScale;
             newToken.Width = aircraft.WidthInMeters * MetersToPixelsScale;
-            var r = new Random();
-            var x = r.Next(0, (int)airportCanvas.ActualWidth);
-            var y = r.Next(0, (int)airportCanvas.ActualHeight);
+            var x = topLeft.X;
+            var y = topLeft.Y;
             Canvas.SetLeft(newToken, x);
             Canvas.SetTop(newToken, y);
             airportCanvas.Children.Add(newToken);
@@ -181,7 +179,7 @@ namespace PlanAPark
                 button.Width = 48;
                 button.Click += (object sender, RoutedEventArgs e) =>
                 {
-                    SpawnNewToken(data);
+                    SpawnNewToken(data, new Point());
                 };
                 pnButtons.Children.Add(button);
             }   
