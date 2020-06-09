@@ -73,7 +73,7 @@ namespace PlanAPark
             mousePosition = currentPosition;
         }
 
-        private void SpawnNewToken(AircraftData aircraft, Point topLeft)
+        private Token SpawnNewToken(AircraftData aircraft, Point topLeft)
         {
             var newToken = new Token();
             newToken.myImage.Source = new BitmapImage(
@@ -83,11 +83,12 @@ namespace PlanAPark
             newToken.myImage.Stretch = Stretch.Fill;
             newToken.Height = aircraft.LengthInMeters * MetersToPixelsScale;
             newToken.Width = aircraft.WidthInMeters * MetersToPixelsScale;
-            var x = topLeft.X;
-            var y = topLeft.Y;
+            var x = topLeft.X - (newToken.Width/2);
+            var y = topLeft.Y - (newToken.Height/2);
+            airportCanvas.Children.Add(newToken);
             Canvas.SetLeft(newToken, x);
             Canvas.SetTop(newToken, y);
-            airportCanvas.Children.Add(newToken);
+            return newToken;
         }
 
         private void SpawnNewToken(TokenDTO tokenDTO)
@@ -128,12 +129,10 @@ namespace PlanAPark
             };
 
             bool? result = dlg.ShowDialog();
-
             if (result == false)
             {
                 return;
             }
-
             Title = $"Plan A Park - {dlg.FileName}";
 
             using var s = dlg.OpenFile();
@@ -152,7 +151,7 @@ namespace PlanAPark
                 };
                 dtos[i] = dto;
             }
-            AirshowLayoutDTO airshowLayoutDto = new AirshowLayoutDTO()
+            var airshowLayoutDto = new AirshowLayoutDTO()
             {
                 TokenDTOs = dtos
             };
@@ -173,17 +172,16 @@ namespace PlanAPark
 
                 buttonImage.Width = 48;
                 buttonImage.Height = 48;
-
-                var button = new Button();
-                button.Style = imageButtonStyle;
-                button.Content = buttonImage;
-                button.Height = 48;
-                button.Width = 48;
-                button.Click += (object sender, RoutedEventArgs e) =>
+                buttonImage.MouseDown += (object sender, MouseButtonEventArgs e) =>
                 {
-                    SpawnNewToken(data, new Point());
+                    mousePosition = e.GetPosition(airportCanvas);
+                    var token = SpawnNewToken(data, mousePosition);
+                    token.Opacity = 0.5f;
+                    selectedToken = token;
+                    token.ShowBorder();
+                    draggedToken = token;  
                 };
-                pnButtons.Children.Add(button);
+                pnButtons.Children.Add(buttonImage);
             }   
         }
 
@@ -197,7 +195,6 @@ namespace PlanAPark
             };
 
             bool? result = dlg.ShowDialog();
-
             if (result == false)
             {
                 return;
@@ -224,7 +221,6 @@ namespace PlanAPark
             };
 
             bool? result = dlg.ShowDialog();
-
             if (result == false)
             {
                 return;
