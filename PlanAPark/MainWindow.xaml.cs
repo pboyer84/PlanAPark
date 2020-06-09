@@ -23,6 +23,7 @@ namespace PlanAPark
         private Token draggedToken;
         private Token selectedToken;
         private string filename = null;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -48,6 +49,7 @@ namespace PlanAPark
             airportCanvas.Focus();
             mousePosition = e.GetPosition(airportCanvas);
             selectedToken?.HideBorder();
+            selectedToken = null;
             if (e.Source is Token)
             {
                 draggedToken = e.Source as Token;
@@ -108,11 +110,11 @@ namespace PlanAPark
         {
             if (e.Key == Key.R)
             {
-                selectedToken.Rotate(-15);
+                selectedToken?.Rotate(-15);
             }
             if (e.Key == Key.T)
             {
-                selectedToken.Rotate(15);
+                selectedToken?.Rotate(15);
             }
         }
 
