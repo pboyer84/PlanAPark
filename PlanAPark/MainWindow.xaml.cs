@@ -18,7 +18,6 @@ namespace PlanAPark
     {
         private readonly double MetersToPixelsScale = 20d / 7d;
         
-        private Style imageButtonStyle;
         private Point mousePosition;
         private Token draggedToken;
         private Token selectedToken;
@@ -27,7 +26,6 @@ namespace PlanAPark
         public MainWindow()
         {
             InitializeComponent();
-            imageButtonStyle = TryFindResource("ImageButtonStyle") as Style;
             LoadAircraft();
         }
 
@@ -38,8 +36,11 @@ namespace PlanAPark
 
         private void OnMouseButtonUp(object sender, MouseButtonEventArgs e)
         {
+            airportCanvas.Focus();
             if (e.Source is Token)
             {
+                draggedToken?.RemoveTransparency();
+                selectedToken = draggedToken;
                 draggedToken = null;
             }
         }
@@ -177,6 +178,7 @@ namespace PlanAPark
                     mousePosition = e.GetPosition(airportCanvas);
                     var token = SpawnNewToken(data, mousePosition);
                     token.Opacity = 0.5f;
+                    selectedToken?.HideBorder();
                     selectedToken = token;
                     token.ShowBorder();
                     draggedToken = token;  

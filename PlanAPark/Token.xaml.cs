@@ -38,6 +38,16 @@ namespace PlanAPark
             myBorder.BorderThickness = Off;
         }
 
+        internal void ShowTransparency()
+        {
+            Opacity = 0.5d;
+        }
+
+        internal void RemoveTransparency()
+        {
+            Opacity = 1d;
+        }
+
         private void MenuItemDelete_Click(object sender, RoutedEventArgs e)
         {
             var canvas = Parent as Canvas;
