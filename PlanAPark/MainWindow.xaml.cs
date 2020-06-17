@@ -240,5 +240,18 @@ namespace PlanAPark
             using var s = dlg.OpenFile();
             pngEncoder.Save(s);
         }
+
+        private void OnMouseWheelScroll(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+                selectedToken?.Rotate(15);
+            }
+            if (e.Delta < 0)
+            {
+                selectedToken?.Rotate(-15);
+            }
+            
+        }
     }
 }

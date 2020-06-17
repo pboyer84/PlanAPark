@@ -49,7 +49,8 @@
                     KeyUp="OnKeyUp"
                     MouseUp="OnMouseButtonUp"
                     MouseMove="OnMouseMove"
-                    MouseDown="OnMouseButtonDown">
+                    MouseDown="OnMouseButtonDown"
+                    MouseWheel="OnMouseWheelScroll">
                 <Image Source="{StaticResource airport}" Stretch="Fill">
                     <Image.RenderTransform>
                         <ScaleTransform ScaleX="2" ScaleY="2" />
