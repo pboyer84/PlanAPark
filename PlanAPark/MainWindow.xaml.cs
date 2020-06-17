@@ -118,6 +118,10 @@ namespace PlanAPark
             {
                 selectedToken?.Rotate(15);
             }
+            if (e.Key == Key.Delete)
+            {
+                airportCanvas.Children.Remove(selectedToken);
+            }
         }
 
         private void MenuItemSaveAs_Click(object sender, RoutedEventArgs e)
