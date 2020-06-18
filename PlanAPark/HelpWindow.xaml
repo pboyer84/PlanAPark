@@ -1,0 +1,31 @@
+﻿<Window x:Class="PlanAPark.HelpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PlanAPark"
+        mc:Ignorable="d"
+        Title="Help" Height="380" Width="500">
+    <StackPanel>
+        <TextBlock TextWrapping="Wrap" Margin="20">
+            <Bold><Underline>How to use</Underline></Bold><LineBreak />
+            Place aircraft onto the area map. Save your plan to finish it later. When it is ready, export to image to print or share with friends.
+            <LineBreak/><LineBreak/>
+            <Bold><Underline>Mouse Controls</Underline></Bold><LineBreak />
+            <Bold>Drag and drop</Bold> aircraft onto the area map.<LineBreak />
+            <Bold>Left-Click</Bold> to select an aircraft on the area map.<LineBreak />
+            <Bold>Right-click</Bold> an aircraft on the area map to bring up the context menu.<LineBreak />
+            Scroll the <Bold>mouse wheel</Bold> to rotate the selected aircraft. 
+            <LineBreak /><LineBreak />
+            <Bold><Underline>Keyboard Controls</Underline></Bold><LineBreak />
+            <Bold>R</Bold> and <Bold>T</Bold> to rotate the selected aircraft.<LineBreak />
+            <Bold>Delete</Bold> key to remove selected aircraft.<LineBreak /><LineBreak />
+            This is an open-source application. You can get more information about the app by visiting it's website.
+            <LineBreak />
+            <LineBreak />Website: <Hyperlink>https://github.com/pboyer84/PlanAPark</Hyperlink>
+            
+        </TextBlock>
+        
+        <Button Width="100" Content="OK" Click="ButtonOk_Click"/>
+    </StackPanel>
+</Window>

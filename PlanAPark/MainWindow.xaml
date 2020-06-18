@@ -28,12 +28,15 @@
             <MenuItem Header="File">
                 <MenuItem Header="_Open" Click="MenuItemOpen_Click" />
                 <MenuItem Header="Export">
-                    <MenuItem  Header="Image (.png)" Click="MenuItemExportPng_Click"/>
+                    <MenuItem Header="Image (.png)" Click="MenuItemExportPng_Click"/>
                 </MenuItem>
                 <MenuItem Header="Save _As" Click="MenuItemSaveAs_Click" />
                 <MenuItem Header="_Save" />
                 <MenuItem Header="_Exit" Click="MenuItemExit_Click" />
-            </MenuItem> 
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="View _Help" Click="MenuItemHelp_Click" />
+            </MenuItem>
         </Menu>
         <Grid>
         <Grid.ColumnDefinitions>

@@ -22,10 +22,12 @@ namespace PlanAPark
         private Token draggedToken;
         private Token selectedToken;
         private string filename = null;
+        private HelpWindow helpWindow;
         
         public MainWindow()
         {
             InitializeComponent();
+            helpWindow = new HelpWindow();
             LoadAircraft();
         }
 
@@ -188,7 +190,7 @@ namespace PlanAPark
                     draggedToken = token;  
                 };
                 pnButtons.Children.Add(buttonImage);
-            }   
+            }
         }
 
         private void MenuItemOpen_Click(object sender, RoutedEventArgs e)
@@ -251,7 +253,11 @@ namespace PlanAPark
             {
                 selectedToken?.Rotate(-15);
             }
-            
+        }
+
+        private void MenuItemHelp_Click(object sender, RoutedEventArgs e)
+        {
+            helpWindow?.ShowDialog();
         }
     }
 }
