@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlanAPark"
         mc:Ignorable="d"
-        Title="Help" Height="380" Width="500">
+        Title="Help" Height="420" Width="640">
     <StackPanel>
         <TextBlock TextWrapping="Wrap" Margin="20">
             <Bold><Underline>How to use</Underline></Bold><LineBreak />
@@ -20,9 +20,13 @@
             <Bold><Underline>Keyboard Controls</Underline></Bold><LineBreak />
             <Bold>R</Bold> and <Bold>T</Bold> to rotate the selected aircraft.<LineBreak />
             <Bold>Delete</Bold> key to remove selected aircraft.<LineBreak /><LineBreak />
-            This is an open-source application. You can get more information about the app by visiting it's website.
+            This is an open-source application. You can get more information about the app by visiting the website.
             <LineBreak />
-            <LineBreak />Website: <Hyperlink>https://github.com/pboyer84/PlanAPark</Hyperlink>
+            <LineBreak />
+            <Hyperlink
+                NavigateUri="https://github.com/pboyer84/PlanAPark"
+                RequestNavigate="Hyperlink_RequestNavigate">https://github.com/pboyer84/PlanAPark
+            </Hyperlink>
             
         </TextBlock>
         

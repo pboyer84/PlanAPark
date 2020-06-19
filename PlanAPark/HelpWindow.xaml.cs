@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PlanAPark
 {
@@ -25,6 +17,30 @@ namespace PlanAPark
         private void ButtonOk_Click(object sender, RoutedEventArgs e)
         {
             Hide();
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            try
+            {
+                if (MessageBoxResult.OK == MessageBox.Show("Go to the PlanAPark website? This will open your default browser.", "Confirm", MessageBoxButton.OKCancel, MessageBoxImage.Question))
+                {
+                    var psi = new ProcessStartInfo
+                    {
+                        FileName = e.Uri.ToString(),
+                        UseShellExecute = true
+                    };
+                    Process.Start(psi);
+                }
+            }
+            catch (PlatformNotSupportedException)
+            {
+                MessageBox.Show($"Opening the default browser is not supported Universal Windows Platform (UWP) apps.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Sorry, unable to launch the default browser.\n{ex.Message}");
+            }
         }
     }
 }
