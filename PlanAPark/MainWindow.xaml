@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlanAPark"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="1600">
+        Title="Plan A Park" Height="900" Width="1600">
     <Window.Resources>
         <local:AircraftData x:Key="tutor" Name="tutor" LengthInMeters="9.75" WidthInMeters="11.07" ImageFilename="tutor.jpg" />
         <local:AircraftData x:Key="hornet" Name="hornet" LengthInMeters="17.1" WidthInMeters="12.3" ImageFilename="hornet.jpg" />

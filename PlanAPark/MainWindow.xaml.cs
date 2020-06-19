@@ -21,12 +21,23 @@ namespace PlanAPark
         private Point mousePosition;
         private Token draggedToken;
         private Token selectedToken;
-        private string filename = null;
+        private string currentFilename = null;
         private HelpWindow helpWindow;
-        
+        private const string AppName = "Plan A Park";
+    
+        public string AppTitle
+        {
+            get
+            {
+                return string.IsNullOrWhiteSpace(currentFilename) 
+                    ? AppName 
+                    : $"{AppName} - {currentFilename}";
+            }
+        }
         public MainWindow()
         {
             InitializeComponent();
+            Title = AppTitle;
             helpWindow = new HelpWindow();
             LoadAircraft();
         }
@@ -130,9 +141,9 @@ namespace PlanAPark
         {
             var dlg = new SaveFileDialog
             {
-                FileName = "Airshow Plan", // Default file name
-                DefaultExt = ".airshow", // Default file extension
-                Filter = "Airshow Plans (.airshow)|*.airshow" // Filter files by extension
+                FileName = currentFilename ?? "Airshow Plan",
+                DefaultExt = ".airshow",
+                Filter = "Airshow Plans (.airshow)|*.airshow"
             };
 
             bool? result = dlg.ShowDialog();
@@ -140,7 +151,8 @@ namespace PlanAPark
             {
                 return;
             }
-            Title = $"Plan A Park - {dlg.FileName}";
+            currentFilename = dlg.FileName;
+            Title = AppTitle;
 
             using var s = dlg.OpenFile();
             var items = airportCanvas.Children.OfType<Token>().ToArray();
@@ -197,9 +209,9 @@ namespace PlanAPark
         {
             var dlg = new OpenFileDialog()
             {
-                FileName = "Airshow Plan", // Default file name
-                DefaultExt = ".airshow", // Default file extension
-                Filter = "Airshow Plans (.airshow)|*.airshow" // Filter files by extension
+                FileName = "Plan",
+                DefaultExt = ".airshow",
+                Filter = "Airshow Plans (.airshow)|*.airshow"
             };
 
             bool? result = dlg.ShowDialog();
@@ -208,7 +220,8 @@ namespace PlanAPark
                 return;
             }
 
-            Title = $"Plan A Park - {dlg.FileName}";
+            currentFilename = dlg.FileName;
+            Title = AppTitle;
 
             using var s = dlg.OpenFile();
             var formatter = new BinaryFormatter();
@@ -223,9 +236,9 @@ namespace PlanAPark
         {
             var dlg = new SaveFileDialog
             {
-                FileName = Path.ChangeExtension(filename ?? "untitled", "png"), // Default file name
-                DefaultExt = ".png", // Default file extension
-                Filter = "PNG (.png)|*.png" // Filter files by extension
+                FileName = Path.ChangeExtension(currentFilename ?? "untitled", "png"),
+                DefaultExt = ".png",
+                Filter = "PNG (.png)|*.png"
             };
 
             bool? result = dlg.ShowDialog();
