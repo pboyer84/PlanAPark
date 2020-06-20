@@ -26,6 +26,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
+                <MenuItem Header="_New" Click="MenuItemNew_Click" />
                 <MenuItem Header="_Open" Click="MenuItemOpen_Click" />
                 <MenuItem Header="Export">
                     <MenuItem Header="Image (.png)" Click="MenuItemExportPng_Click"/>

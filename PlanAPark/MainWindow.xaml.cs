@@ -222,6 +222,7 @@ namespace PlanAPark
 
             currentFilename = dlg.FileName;
             Title = AppTitle;
+            ClearTheAirportCanvas();
 
             using var s = dlg.OpenFile();
             var formatter = new BinaryFormatter();
@@ -271,6 +272,24 @@ namespace PlanAPark
         private void MenuItemHelp_Click(object sender, RoutedEventArgs e)
         {
             helpWindow?.ShowDialog();
+        }
+
+        private void MenuItemNew_Click(object sender, RoutedEventArgs e)
+        {
+            ClearTheAirportCanvas();
+            currentFilename = null;
+            Title = AppTitle;
+            
+        }
+
+        private void ClearTheAirportCanvas()
+        {
+            var numberOfTokens = airportCanvas.Children.OfType<Token>().Count();
+            if (numberOfTokens <= 0)
+            {
+                return;
+            }
+            airportCanvas.Children.RemoveRange(1, numberOfTokens);
         }
     }
 }
