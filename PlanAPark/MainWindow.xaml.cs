@@ -42,6 +42,21 @@ namespace PlanAPark
             LoadAircraft();
         }
 
+        public MainWindow(string filename)
+        {
+            InitializeComponent();
+            currentFilename = filename;
+            Title = AppTitle;
+            helpWindow = new HelpWindow();
+            LoadAircraft();
+
+            if (!string.IsNullOrEmpty(currentFilename))
+            {
+                using var fs = new FileStream(filename, FileMode.Open);
+                Open(fs);
+            }
+        }
+
         private void MenuItemExit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -225,12 +240,7 @@ namespace PlanAPark
             ClearTheAirportCanvas();
 
             using var s = dlg.OpenFile();
-            var formatter = new BinaryFormatter();
-            var dtoLayout = formatter.Deserialize(s) as AirshowLayoutDTO;
-            foreach (var dto in dtoLayout.TokenDTOs)
-            {
-                SpawnNewToken(dto);
-            }
+            Open(s);
         }
 
         private void MenuItemExportPng_Click(object sender, RoutedEventArgs e)
@@ -290,6 +300,16 @@ namespace PlanAPark
                 return;
             }
             airportCanvas.Children.RemoveRange(1, numberOfTokens);
+        }
+
+        private void Open(Stream s)
+        {
+            var formatter = new BinaryFormatter();
+            var dtoLayout = formatter.Deserialize(s) as AirshowLayoutDTO;
+            foreach (var dto in dtoLayout.TokenDTOs)
+            {
+                SpawnNewToken(dto);
+            }
         }
     }
 }
